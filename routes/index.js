@@ -1,28 +1,15 @@
-const express = require('express') 
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
+const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
-// This will be the Login page
-//router get login
-router.get('/', (req, res) => {
-    res.render('login')
-})
+// Welcome Page
+router.get('/', forwardAuthenticated, (req, res) => res.render('welcome'));
 
-//signup page router to get signup
-router.get('/signup', (req, res) => {
-    res.render('signup')
-})
+// Dashboard
+router.get('/dashboard', ensureAuthenticated, (req, res) =>
+  res.render('dashboard', {
+    user: req.user
+  })
+);
 
-//Sign Up Handle
-router.post('/signup', (req, res) => {
-    console.log(reg.body)
-    res.send('hello')
-})
-
-//dashboard page
-//router get dashboard
-router.get('/dashboard', (req, res) => {
-    res.render('dashboard')
-})
-
-
-module.exports = router
+module.exports = router;
