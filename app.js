@@ -3,11 +3,11 @@ const express = require('express')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const morgan = require('morgan')
-const connectDB = require('./config/db');
-const exphbs = require('express-handlebars');
-const MongoStore = require('connect-mongo')
-const session = require('express-session')
+const exphbs = require('express-handlebars')
 const passport = require('passport')
+const session = require('express-session')
+const MongoStore = require('connect-mongo')
+const connectDB = require('./config/db')
 
 const app = express()
 
@@ -31,13 +31,14 @@ app.set('view engine', '.hbs')
 
 //Bodyparser
 app.use(express.urlencoded({ extended: false }));
-
+app.use(express.json())
 
 //Express Session
 app.use(session({
     secret: 'secret',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    store: MongoStore.create({ mongoUrl: 'mongodb://localhost/3000' })
 }))
 
 //Passport Middleware
@@ -59,6 +60,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', require('./routes/index'))
 app.use('/users', require('./routes/users'))
+// app.use('/reviews', require('./routes/reviews'))
 
 const PORT = process.env.PORT || 3000
 

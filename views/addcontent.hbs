@@ -1,0 +1,50 @@
+<h1><i class="fas fa-book-reader"> ViewFlix And Spill</i></h1>
+
+<p class="lead">Hello {{name}}!!! Tell us what you watched here!</p>
+
+<head>
+    <body>
+        <div class="search-input-wrapper">
+          <div class="search-input">
+              <input type="test" placeholder="Search">
+              <i class="fas fa-times"></i>
+          </div>    
+        </div>
+        <div class="search-icon">
+            <i class="fas fa-search"></i>
+        </div>
+    </body>
+</head>
+
+<h3>Add Review</h3>
+<div class="'row">
+    <form action="/reviews" method="post" class="col s12">
+        <div class="row">
+            <div class="input-field">
+                <input type="text" id="title" name="title">
+                <label for="title">Title</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field">
+                <h5>Tell Us Your Review</h5>
+                <textarea name="body" id="body" cols="30" rows="10"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <input type="submit" value="Save" class="btn">
+            <a href="/reviews" class="btn organe">Cancel</a>
+        </div>
+    </form>
+</div>
+<br>
+<br>
+<br>
+
+<a href="/dashboard" class="btn btn-secondary">Go back</a>
+
+<br>
+<br>
+<br>
+<a href="/users/logout" class="btn btn-secondary">Logout</a>
