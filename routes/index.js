@@ -9,11 +9,17 @@ const Reviews = require('../models/Reviews')
 router.get('/', forwardAuthenticated, (req, res) => res.render('welcome'));
 
 // Dashboard
-router.get('/dashboard', ensureAuthenticated, (req, res) =>
-  res.render('dashboard', {
-    name: req.user.name
-  })
-);
+router.get('/dashboard', ensureAuthenticated, async (req, res) => {
+    try {
+        const reviews = await Reviews.find({ user: req.user.id }).lean()
+        res.render('dashboard', {
+          name: req.user.name,
+          reviews
+      })
+    }catch (err) {
+      console.error(err)
+    }
+});
 
 // Add Content Page
 router.get('/addcontent', ensureAuthenticated, (req, res) =>
@@ -36,23 +42,13 @@ router.post('/reviews', ensureAuthenticated, async (req, res) => {
   try {
       req.body.user = req.user  
       await Reviews.create(req.body)
-      res.redirect('/review')
+      res.redirect('/dashboard')
   } catch (err) {
       console.error(err)
   }
 });
 
 
-router.get('/reviews', ensureAuthenticated, async (req, res) => {
-    try {
-        const reviews = await Reviews.find({ user: req.user.id }).lean()
-        res.render('reviews', {
-          name: req.user.name,
-          reviews
-      })
-    }catch (err) {
-      console.error(err)
-    }
-});
+
 
 module.exports = router;

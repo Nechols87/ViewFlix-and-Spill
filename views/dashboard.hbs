@@ -6,18 +6,14 @@
 <br>
 <br>
 
-<p>Here are your shows</p>
+<h3>Here are the reviews!</h3>
 {{#if reviews}}
     <table class="striped">
-        <thead>
-            <tr>
-                <th>Title</th>
-            </tr>
-        </thead>
         <tbody>
             {{#each reviews}}
                 <tr>
-                    <td><a href="/reviews/{{_id}}"></a></td>
+                    <tr><strong>{{title}}</strong></tr> <br>
+                    <tr>{{body}}</tr>
                 </tr>
             {{/each}}
         </tbody>
