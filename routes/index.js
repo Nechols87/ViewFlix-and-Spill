@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
+
 // Load Reviews model
 const Reviews = require('../models/Reviews')
 
@@ -21,6 +22,21 @@ router.get('/dashboard', ensureAuthenticated, async (req, res) => {
     }
 });
 
+//Get req for all the reviews on review page
+router.get('/reviews', ensureAuthenticated, async (req, res) => {
+    try {
+      const reviews = await Reviews.find({ status: 'public' })
+        .populate('user')
+        .lean()
+  
+      res.render('reviews', {
+        reviews,
+      })
+    } catch (err) {
+      console.error(err)
+    }
+  })
+
 // Add Content Page
 router.get('/addcontent', ensureAuthenticated, (req, res) =>
   res.render('addcontent', {
@@ -36,6 +52,8 @@ router.get('/reviews', ensureAuthenticated, (req, res) =>
 );
 
 
+
+
 // Process add reviews
 // POST/add reviews
 router.post('/reviews', ensureAuthenticated, async (req, res) => {
@@ -47,6 +65,8 @@ router.post('/reviews', ensureAuthenticated, async (req, res) => {
       console.error(err)
   }
 });
+
+
 
 
 

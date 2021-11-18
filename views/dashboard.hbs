@@ -6,19 +6,24 @@
 <br>
 <br>
 
-<h3>Here are the reviews!</h3>
+<h3>Here are your reviews!</h3>
 {{#if reviews}}
-    <table class="striped">
+    <div class="striped">
         <tbody>
             {{#each reviews}}
-                <tr>
-                    <tr><strong>{{title}}</strong></tr> <br>
-                    <tr>{{body}}</tr>
-                </tr>
+                <div>
+                    <div class="divd"><strong>{{title}}</strong></div> <br>
+                    <div>{{body}}</div>
+                </div>
             {{/each}}
         </tbody>
-    </table>
+    </div>
 {{/if}}
+<br>
+<br>
+<p>Check out what your friends have been watching!</p>
+<a href="/reviews" class="btn btn-secondary">All Reviews</a>
+
 <br>
 <br>
 <br>

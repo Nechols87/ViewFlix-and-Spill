@@ -5,14 +5,64 @@
 <head>
     <body>
         <div class="search-input-wrapper">
-          <div class="search-input">
-              <input type="test" placeholder="Search">
-              <i class="fas fa-times"></i>
+          <div class="search-input" id="searchWrapper">
+              <input type="test" name="searchBar" id="searchBar" placeholder="Search">
+               {{!-- <button onclick="loadTitles()">Search</button> --}}
           </div>    
         </div>
         <div class="search-icon">
-            <i class="fas fa-search"></i>
+           <ul id="searchList"></ul>
         </div>
+        <script>
+const searchList = document.getElementById('searchList');
+const searchBar = document.getElementById('searchBar');
+let showList = [];
+
+searchBar.addEventListener('keyup', (e) => {
+    const searchString = e.target.value.toLowerCase();
+
+    const filteredShows = showList.filter((show) => {
+        return (
+            show.Title.toLowerCase().includes(searchString)
+        );
+    });
+    displayShows(filteredShows);
+});
+
+const loadTitles = async () => {
+    try {
+        const res = await fetch("movie-database-imdb-alternative.p.rapidapi.com", {
+        "method": "GET",
+        "headers": {
+            "x-rapidapi-host": "movie-database-imdb-alternative.p.rapidapi.com",
+            "x-rapidapi-key": "2372112167mshc03152c3eb84f26p154bd2jsn44b5366d64a6"
+        }
+    });
+        showList = await res.json();
+        console.log(showList)
+        displayShows(showList);
+    } catch(err) {
+        console.error(err);
+    };
+};
+
+const displayShows = (shows) => {
+    console.log(shows)
+    const htmlString = shows
+        .map((show => {
+            return `
+            <li class="character">
+                <h2>${show.Title}</h2>
+            </li>
+        `;
+        })
+        .join(''))
+        searchList.innerHTML = htmlString;
+};
+
+loadTitles();
+
+</script>
     </body>
 </head>
 
@@ -22,7 +72,7 @@
         <div class="row">
             <div class="input-field">
                 <input type="text" id="title" name="title">
-                <label for="title">Title</label>
+                <label for="title">Title of movie or tv show</label>
             </div>
         </div>
 

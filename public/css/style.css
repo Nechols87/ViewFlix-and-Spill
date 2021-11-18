@@ -1,1 +1,12 @@
 body {background: lightblue;}
+
+.wrapper {
+    font-size: 0;
+}
+
+/* .divd { 
+    display: inline-block;
+    width: 50px;
+    height: 50px;   
+    font-size: 14px;
+} */
