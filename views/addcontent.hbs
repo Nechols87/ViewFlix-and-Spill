@@ -31,13 +31,13 @@ searchBar.addEventListener('keyup', (e) => {
 
 const loadTitles = async () => {
     try {
-        const res = await fetch("movie-database-imdb-alternative.p.rapidapi.com", {
-        "method": "GET",
-        "headers": {
-            "x-rapidapi-host": "movie-database-imdb-alternative.p.rapidapi.com",
-            "x-rapidapi-key": "2372112167mshc03152c3eb84f26p154bd2jsn44b5366d64a6"
-        }
-    });
+        const res = await fetch("https://movie-database-imdb-alternative.p.rapidapi.com/?s=Avengers%20Endgame&r=json&page=1", {
+	"method": "GET",
+	"headers": {
+		"x-rapidapi-host": "movie-database-imdb-alternative.p.rapidapi.com",
+		"x-rapidapi-key": "2372112167mshc03152c3eb84f26p154bd2jsn44b5366d64a6"
+	}
+});
         showList = await res.json();
         console.log(showList)
         displayShows(showList);
