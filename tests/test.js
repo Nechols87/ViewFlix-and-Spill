@@ -1,6 +1,5 @@
 const request = require("supertest");
 const express = require("express");
-const User = require('../models/User');
 const app = express();
 
 
@@ -8,11 +7,10 @@ describe('Route integration', () => {
     describe('/', () => {
       describe('GET', () => {
 
-        it('responds with 200 status and text/html content type', () => {
+        it('responds with text/html content type', () => {
           return request(app)
             .get('/')
             .expect('Content-Type', /text\/html/)
-            // .expect(200);
         });
       });
     });
@@ -22,32 +20,57 @@ describe('Route integration', () => {
     describe('/users', () => {
       describe('GET', () => {
 
-        it('responds with 200 status and text/html content type', () => {
+        it('responds with text/html content type', () => {
           return request(app)
             .get('/')
             .expect('Content-Type', /text\/html/)
-            // .expect(200);
         });
       });
     });
   });
 
-describe('/markets', () => {
-    describe('GET', () => {
-      it('responds with 200 status and application/json content type', () => {
-        return request(server)
-          .get('/markets')
-          .expect('Content-Type', /application\/json/)
-          .expect(200);
+describe('/signup', () => {
+    describe('POST', () => {
+      it('responds with text/html content type', () => {
+        return request(app)
+          .post('/signup')
+          .send({name: "testName", email: "testPassword", password: "testPassword"})
+          .expect('Content-Type', /text\/html/)
       });
 
-      // For this test, you'll need to inspect the body of the response and
-      // ensure it contains the markets list. Check the markets.dev.json file
-      // in the dev database to get an idea of what shape you're expecting.
-      it('markets from "DB" json are in body of response', async () => {
-        const response = await request(server).get('/markets');
-        // console.log('___________________DB.FIND: ', db.find());
-        expect(db.find()).toEqual(response.body);
-      });
     });
 })  
+
+describe('/reviews', () => {
+    describe('POST', () => {
+      it('responds with text/html content type', () => {
+        const User = {name: "testUser"}
+        return request(app)
+          .post('/reviews')
+          .send({title: "testTitle", body: "testBody", user: User, status: "public"})
+          .expect('Content-Type', /text\/html/)
+      });
+
+      it('responds with the updated review', async () => {
+        const User = {name: "testUser"}
+        // Create new review
+        const newReview = {title: "testTitle", body: "testBody", user: User, status: "public"};
+        
+        const response = await request(app).post('/reviews').send(newReview);
+
+        // Expect that our created 'new review' is same as list on response.body
+        expect(response.body).toMatchObject(newReview);
+      });
+
+    });
+})  
+
+describe('Validate API calls', () => {
+  it('create session post request should fail for invalid credentials', () => {
+    const data = { name: 'incorrect_username', password: 'INVALID' };
+    request(app).post('/users/login')
+      .send(data)
+      .expect('Content-Type', /text\/html/)
+      .expect({ name: 'AuthenticationError', message: 'Unauthorized' })
+  });
+});
