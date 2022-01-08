@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "description": "App to share rankings of tv shows and movies with friends",
   "main": "app.js",
+  "jest": {
+    "verbose": true
+  },
   "scripts": {
     "start": "cross-env NODE_ENV=production node app",
-    "dev": "cross-env NODE_ENV=development nodemon app"
+    "dev": "cross-env NODE_ENV=development nodemon app",
+    "test": "jest"
   },
   "author": "Nick Echols",
   "license": "MIT",
@@ -16,6 +20,7 @@
     "express": "^4.17.1",
     "express-handlebars": "^6.0.1",
     "express-session": "^1.17.2",
+    "jest": "^27.4.5",
     "method-override": "^3.0.0",
     "moment": "^2.29.1",
     "mongodb": "^4.1.4",
@@ -44,6 +49,7 @@
     "html-webpack-plugin": "^5.5.0",
     "nodemon": "^2.0.15",
     "style-loader": "^3.3.1",
+    "supertest": "^6.1.6",
     "url-loader": "^4.1.1",
     "webpack": "^5.64.0",
     "webpack-cli": "^4.9.1",
